@@ -26,6 +26,10 @@ public class Alarmknopf {
         setTelefonnummer(telefonnummer);
     }
 
+    public UUID getId() {
+        return id;
+    }
+
     public Point2D.Double getPosition() {
         return position;
     }

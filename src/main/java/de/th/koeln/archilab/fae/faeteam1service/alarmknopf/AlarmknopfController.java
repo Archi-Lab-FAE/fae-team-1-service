@@ -16,22 +16,22 @@ public class AlarmknopfController {
         this.alarmknopfRepository = alarmknopfRepository;
     }
 
-    @GetMapping("/alarmknopf")
+    @GetMapping("/alarmknoepfe")
     public List<Alarmknopf> getAllAlarmknoepfe() {
         return this.alarmknopfRepository.findAll();
     }
 
-    @GetMapping("/alarmknopf/{id}")
+    @GetMapping("/alarmknoepfe/{id}")
     public Alarmknopf getAlarmknopf(@PathVariable UUID id) {
         return this.alarmknopfRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Alarmknopf existiert nicht"));
     }
 
-    @PostMapping("/alarmknopf")
+    @PostMapping("/alarmknoepfe")
     public Alarmknopf postAlarmknopf(@RequestBody Alarmknopf alarmknopf) {
         return this.alarmknopfRepository.save(alarmknopf);
     }
 
-    @PutMapping("/alarmknopf/{id}")
+    @PutMapping("/alarmknoepfe/{id}")
     public Alarmknopf putAlarmknopf(@PathVariable UUID id, @RequestBody Alarmknopf alarmknopf) {
         return this.alarmknopfRepository.findById(id).map(currentKnopf -> {
             currentKnopf.setPosition(alarmknopf.getPosition());
@@ -40,12 +40,12 @@ public class AlarmknopfController {
         }).orElseGet(() -> this.alarmknopfRepository.save(alarmknopf));
     }
 
-    @DeleteMapping("/alarmknopf")
+    @DeleteMapping("/alarmknoepfe")
     public void deleteAllAlarmknoepfe() {
         this.alarmknopfRepository.deleteAll();
     }
 
-    @DeleteMapping("/alarmknopf/{id}")
+    @DeleteMapping("/alarmknoepfe/{id}")
     public void deleteAlarmknopf(@PathVariable UUID id) {
         this.alarmknopfRepository.deleteById(id);
     }
