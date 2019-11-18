@@ -1,0 +1,182 @@
+{
+	"info": {
+		"_postman_id": "22e12b5d-f909-4d86-af01-70f47604e7c5",
+		"name": "FAE_Team_1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Alarmknopf",
+			"item": [
+				{
+					"name": "/alarmknoepfe",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/alarmknoepfe",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"alarmknoepfe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/alarmknoepfe/{id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/alarmknoepfe/{{alarmknopf_id}}",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"alarmknoepfe",
+								"{{alarmknopf_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/alarmknoepfe",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "3a683f66-16f3-4d00-a1b0-f7dc0ac9dd0f",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "4edb6914-027d-4f3f-879d-bfbb5d1d9020",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.environment.set(\"alarmknopf_id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"position\": {\n\t\t\"x\": 0.5364,\n\t\t\"y\": 1.258\n\t},\n\t\"telefonnummer\": \"74572984583\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/alarmknoepfe",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"alarmknoepfe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/alarmknoepfe/{id}",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e57545c8-dae8-4705-8032-f184f650f349",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": \"{{alarmknopf_id}}\",\n\t\"position\": {\n\t\t\"x\": 3.9072,\n\t\t\"y\": 2.9743\n\t},\n\t\"telefonnummer\": \"+49 (839) 1027 7894301\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/alarmknoepfe/{{alarmknopf_id}}",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"alarmknoepfe",
+								"{{alarmknopf_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/alarmknoepfe",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/alarmknoepfe",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"alarmknoepfe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/alarmknoepfe/{id}",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/alarmknoepfe/{{alarmknopf_id}}",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"alarmknoepfe",
+								"{{alarmknopf_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
