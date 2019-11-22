@@ -1,6 +1,5 @@
-package DementiellErkrankter;
+package de.th.koeln.archilab.fae.faeteam1service.DementiellErkrankter;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -9,8 +8,11 @@ import java.util.UUID;
 @RestController
 public class DementiellErkrankterController {
 
-    @Autowired
-    private DementiellErkrankterRepository dementiellErkrankterRepository;
+    private final DementiellErkrankterRepository dementiellErkrankterRepository;
+
+    public DementiellErkrankterController(DementiellErkrankterRepository dementiellErkrankterRepository) {
+        this.dementiellErkrankterRepository = dementiellErkrankterRepository;
+    }
 
     @GetMapping("/DementiellErkrankter")
     public Iterable<DementiellErkrankter> getallDementiellErkrankter() {
