@@ -1,0 +1,18 @@
+version: "3.7"
+
+services:
+  springboot-service:
+    image: docker.nexus.archi-lab.io/archilab/fae-team-1-service
+    environment:
+    depends_on:
+    networks:
+      - service_internal
+      - fae_backend
+
+volumes:
+  shop_demo_db: {}
+
+networks:
+  service_internal:
+  fae_backend:
+    external: true
