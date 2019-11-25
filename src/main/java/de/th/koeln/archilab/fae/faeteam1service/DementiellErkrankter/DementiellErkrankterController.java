@@ -10,32 +10,32 @@ public class DementiellErkrankterController {
 
     private final DementiellErkrankterRepository dementiellErkrankterRepository;
 
-    public DementiellErkrankterController(DementiellErkrankterRepository dementiellErkrankterRepository) {
+    public DementiellErkrankterController(DementiellErkrankterRepository dementiellErkrankterRepository ) {
         this.dementiellErkrankterRepository = dementiellErkrankterRepository;
     }
 
-    @GetMapping("/DementiellErkrankter")
+    @GetMapping("/DementiellErkrankte")
     public Iterable<DementiellErkrankter> getallDementiellErkrankter() {
         return dementiellErkrankterRepository.findAll();
     }
 
-    @GetMapping("/DementiellErkrankter/{id}")
+    @GetMapping("/DementiellErkrankte/{id}")
     public Optional<DementiellErkrankter> getDementiellErkrankterById(@PathVariable UUID id){
         return dementiellErkrankterRepository.findById(id);
     }
 
-    @DeleteMapping("/DementiellErkrankter/{id}")
+    @DeleteMapping("/DementiellErkrankte/{id}")
     public void deleteDementiellErkrankterById(@PathVariable UUID id) {
         dementiellErkrankterRepository.deleteById(id);
         return;
     }
 
-    @PostMapping("/DementiellErkrankter")
+    @PostMapping("/DementiellErkrankte")
     public DementiellErkrankter newDementiellErkrankter(@RequestBody DementiellErkrankter dementiellErkrankter) {
         return dementiellErkrankterRepository.save(dementiellErkrankter);
     }
 
-    @PutMapping("/DementiellErkrankter/{id}")
+    @PutMapping("/DementiellErkrankte/{id}")
     public DementiellErkrankter updateDementiellErkrankter(@RequestBody DementiellErkrankter newDementiellErkrankter, @PathVariable UUID id ) {
         if ( dementiellErkrankterRepository.existsById(id) ) {
             newDementiellErkrankter.setId(id);
