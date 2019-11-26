@@ -11,7 +11,7 @@ import java.util.UUID;
 @Data
 @Entity
 @AllArgsConstructor
-@Table( name = "kontaktperson" )
+@Table( name = "kontaktPersonen" )
 public class KontaktPerson {
     @Id
     private UUID id;
@@ -19,4 +19,8 @@ public class KontaktPerson {
     private String vorname;
     private String telefonnummer;
     private Boolean zustimmung;
+
+    protected KontaktPerson() {
+        this.id = UUID.randomUUID();
+    }
 }
