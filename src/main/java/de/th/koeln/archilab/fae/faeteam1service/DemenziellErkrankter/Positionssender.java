@@ -40,7 +40,7 @@ public class Positionssender {
     }
 
     @OneToOne
-    @JoinColumn( name = "DemenziellErkrankterId", referencedColumnName = "demenziellerkrankterId" )
+    @JoinColumn( name = "DemenziellErkrankter", referencedColumnName = "id" )
     private DemenziellErkrankter demenziellErkrankter;
 
     public void setDemenziellErkrankter(DemenziellErkrankter demenziellErkrankter) {

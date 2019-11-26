@@ -15,7 +15,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @AllArgsConstructor
-@Table( name = "dementiellErkrankte")
+@Table( name = "demenziellErkrankte")
 public class DemenziellErkrankter implements Serializable {
     @Id
     private UUID id;
@@ -25,11 +25,11 @@ public class DemenziellErkrankter implements Serializable {
     private Integer schuhgroesse;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "dementiellErkrankte_id")
+    @JoinColumn(name = "demenziellErkrankte_id")
     private List<Zone> zonen;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "dementiellErkrankte_id")
+    @JoinColumn(name = "demenziellErkrankte_id")
     private List<KontaktPerson> kontaktPersonen;
 
     @OneToOne(targetEntity = Positionssender.class, mappedBy = "demenziellErkrankter")
