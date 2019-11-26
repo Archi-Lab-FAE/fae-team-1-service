@@ -28,6 +28,10 @@ public class DementiellErkrankter implements Serializable {
     @JoinColumn(name = "dementiellErkrankte_id")
     private List<Zone> zonen;
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "dementiellErkrankte_id")
+    private List<KontaktPerson> kontaktPersonen;
+
     protected DementiellErkrankter() {
         this.id = UUID.randomUUID();
     }
