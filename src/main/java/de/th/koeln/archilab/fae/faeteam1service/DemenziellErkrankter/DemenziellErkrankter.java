@@ -1,4 +1,4 @@
-package de.th.koeln.archilab.fae.faeteam1service.DementiellErkrankter;
+package de.th.koeln.archilab.fae.faeteam1service.DemenziellErkrankter;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,7 +16,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @Table( name = "dementiellErkrankte")
-public class DementiellErkrankter implements Serializable {
+public class DemenziellErkrankter implements Serializable {
     @Id
     private UUID id;
     private String name;
@@ -32,7 +32,14 @@ public class DementiellErkrankter implements Serializable {
     @JoinColumn(name = "dementiellErkrankte_id")
     private List<KontaktPerson> kontaktPersonen;
 
-    protected DementiellErkrankter() {
+    @OneToOne(targetEntity = Positionssender.class, mappedBy = "demenziellErkrankter")
+    private List<Positionssender> Positionen;
+    public void setPositionssender(List<Positionssender> Positionen) {
+        this.Positionen = Positionen;
+    }
+
+
+    protected DemenziellErkrankter() {
         this.id = UUID.randomUUID();
     }
     public void setZonen(List<Zone> zonen) {

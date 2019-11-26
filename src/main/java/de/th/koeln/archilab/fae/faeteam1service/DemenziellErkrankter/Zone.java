@@ -1,4 +1,4 @@
-package de.th.koeln.archilab.fae.faeteam1service.DementiellErkrankter;
+package de.th.koeln.archilab.fae.faeteam1service.DemenziellErkrankter;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
