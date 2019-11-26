@@ -16,15 +16,8 @@ public class Zone {
     private double[] koordinaten;
     private Boolean sicher;
 
-    @ManyToOne
-    @JoinColumn( name = "DEMENTIELLERKRANKTER_ID", referencedColumnName = "ID" )
-    private DementiellErkrankter dementiellErkrankter;
-
     protected Zone() {
         this.id = UUID.randomUUID();
     }
 
-    public void setDementiellErkrankter(DementiellErkrankter dementiellErkrankter) {
-        this.dementiellErkrankter = dementiellErkrankter;
-    }
 }

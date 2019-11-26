@@ -5,10 +5,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
@@ -18,7 +15,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @AllArgsConstructor
-//@Table( name = "dementiellErkrankte")
+@Table( name = "dementiellErkrankte")
 public class DementiellErkrankter implements Serializable {
     @Id
     private UUID id;
@@ -27,7 +24,8 @@ public class DementiellErkrankter implements Serializable {
     private Boolean zustimmung;
     private Integer schuhgroesse;
 
-    @OneToMany ( targetEntity = Zone.class, mappedBy = "dementiellErkrankter" )
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "dementiellErkrankte_id")
     private List<Zone> zonen;
 
     protected DementiellErkrankter() {
