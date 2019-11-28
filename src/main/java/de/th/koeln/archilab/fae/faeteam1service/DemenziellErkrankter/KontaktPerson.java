@@ -20,7 +20,47 @@ public class KontaktPerson {
     private String telefonnummer;
     private Boolean zustimmung;
 
-    protected KontaktPerson() {
+    public KontaktPerson() {
         this.id = UUID.randomUUID();
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getVorname() {
+        return vorname;
+    }
+
+    public void setVorname(String vorname) {
+        this.vorname = vorname;
+    }
+
+    public String getTelefonnummer() {
+        return telefonnummer;
+    }
+
+    public void setTelefonnummer(String telefonnummer) {
+        this.telefonnummer = telefonnummer;
+    }
+
+    public Boolean getZustimmung() {
+        return zustimmung;
+    }
+
+    public void setZustimmung(Boolean zustimmung) {
+        this.zustimmung = zustimmung;
     }
 }

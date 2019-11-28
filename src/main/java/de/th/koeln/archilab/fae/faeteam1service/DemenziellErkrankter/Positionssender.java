@@ -39,7 +39,7 @@ public class Positionssender {
         return Position;
     }
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn( name = "DemenziellErkrankter", referencedColumnName = "id" )
     private DemenziellErkrankter demenziellErkrankter;
 
@@ -47,6 +47,10 @@ public class Positionssender {
 
         this.demenziellErkrankter = demenziellErkrankter;
 
+    }
+
+    public DemenziellErkrankter getDemenziellErkrankter() {
+        return demenziellErkrankter;
     }
 }
 

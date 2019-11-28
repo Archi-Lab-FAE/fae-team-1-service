@@ -38,7 +38,7 @@ public class DemenziellErkrankterController {
     @PutMapping("/DemenziellErkrankte/{id}")
     public DemenziellErkrankter updateDemenziellErkrankter(@RequestBody DemenziellErkrankter newDemenziellErkrankter, @PathVariable UUID id ) {
         if ( demenziellErkrankterRepository.existsById(id) ) {
-            newDemenziellErkrankter.setId(id);
+            //newDemenziellErkrankter.setId(id);
         }
         return demenziellErkrankterRepository.save(newDemenziellErkrankter);
     }
