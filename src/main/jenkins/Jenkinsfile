@@ -21,7 +21,6 @@ node {
         } finally {
             junit 'target/surefire-reports/*.xml'
         }
-
         stage('Quality Check') {
             sh 'mvn -B -s settings.xml checkstyle:checkstyle'
             jacoco()
@@ -30,7 +29,7 @@ node {
                     org.sonarsource.scanner.maven:sonar-maven-plugin:3.6.0.1398:sonar'
             }
         }
-        /*
+
         stage("Quality Gate") {
             timeout(time: 1, unit: "MINUTES") {
                 def qg = waitForQualityGate()
@@ -43,7 +42,7 @@ node {
                     }
                 }
             }
-        }*/
+        }
 
         stage('Build Production') {
             withCredentials([usernamePassword(credentialsId: 'archilab-nexus-jenkins',
@@ -55,7 +54,7 @@ node {
             }
         }
     }
-
+       /*
     // TODO Students: add docker compose files
      stage('Deploy') {
         docker.withServer('tcp://10.10.10.61:2376', 'fae-ws2019-certs') {
@@ -65,5 +64,5 @@ node {
                     -c src/main/docker/docker-compose-prod.yml ${image}"
             }
         }
-    }
+    }*/
 }
