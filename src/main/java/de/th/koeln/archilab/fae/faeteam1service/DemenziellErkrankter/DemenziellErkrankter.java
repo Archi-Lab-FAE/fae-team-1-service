@@ -26,10 +26,6 @@ public class DemenziellErkrankter implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "demenziellErkrankte_id")
-    private List<Zone> zonen;
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "demenziellErkrankte_id")
     private List<KontaktPerson> kontaktPersonen;
     public void setKontaktPersonen(List<KontaktPerson> kontaktPersonen) { this.kontaktPersonen = kontaktPersonen; }
     public List<KontaktPerson> getKontaktPersonen() { return kontaktPersonen; }
@@ -43,9 +39,6 @@ public class DemenziellErkrankter implements Serializable {
 
     public DemenziellErkrankter() {
         this.id = UUID.randomUUID();
-    }
-    public void setZonen(List<Zone> zonen) {
-        this.zonen = zonen;
     }
 
     public UUID getId() {
