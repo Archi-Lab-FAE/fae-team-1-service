@@ -17,7 +17,7 @@ public class AlarmknopfController {
     }
 
     @GetMapping("/alarmknoepfe")
-    public List<Alarmknopf> getAllAlarmknoepfe() {
+    public Iterable<Alarmknopf> getAllAlarmknoepfe() {
         return this.alarmknopfRepository.findAll();
     }
 
