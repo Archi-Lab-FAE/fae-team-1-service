@@ -14,28 +14,28 @@ public class DemenziellErkrankterController {
         this.demenziellErkrankterRepository = demenziellErkrankterRepository;
     }
 
-    @GetMapping("/DemenziellErkrankte")
+    @GetMapping("/demenziell-erkrankte")
     public Iterable<DemenziellErkrankter> getallDemenziellErkrankter() {
         return demenziellErkrankterRepository.findAll();
     }
 
-    @GetMapping("/DemenziellErkrankte/{id}")
+    @GetMapping("/demenziell-erkrankte/{id}")
     public Optional<DemenziellErkrankter> getDemenziellErkrankterById(@PathVariable UUID id){
         return demenziellErkrankterRepository.findById(id);
     }
 
-    @DeleteMapping("/DemenziellErkrankte/{id}")
+    @DeleteMapping("/demenziell-erkrankte/{id}")
     public void deleteDemenziellErkrankterById(@PathVariable UUID id) {
         demenziellErkrankterRepository.deleteById(id);
         return;
     }
 
-    @PostMapping("/DemenziellErkrankte")
+    @PostMapping("/demenziell-erkrankte")
     public DemenziellErkrankter newDemenziellErkrankter(@RequestBody DemenziellErkrankter demenziellErkrankter) {
         return demenziellErkrankterRepository.save(demenziellErkrankter);
     }
 
-    @PutMapping("/DemenziellErkrankte/{id}")
+    @PutMapping("/demenziell-erkrankte/{id}")
     public DemenziellErkrankter updateDemenziellErkrankter(@RequestBody DemenziellErkrankter newDemenziellErkrankter, @PathVariable UUID id ) {
         if ( demenziellErkrankterRepository.existsById(id) ) {
             //newDemenziellErkrankter.setId(id);
