@@ -18,7 +18,7 @@ import java.util.UUID;
 @Table( name = "demenziellErkrankte")
 public class DemenziellErkrankter implements Serializable {
     @Id
-    private UUID id;
+    private String id;
     private String name;
     private String vorname;
     private Boolean zustimmung;
@@ -38,10 +38,7 @@ public class DemenziellErkrankter implements Serializable {
 
 
     public DemenziellErkrankter() {
-        this.id = UUID.randomUUID();
+        this.id = UUID.randomUUID().toString();
     }
 
-    public UUID getId() {
-        return id;
-    }
 }

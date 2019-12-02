@@ -74,7 +74,7 @@ public class DemenziellErkrankterTest {
     public void demenziellErkranterShouldBeAddedSuccessfully() throws Exception {
         demenziellErkrankterRepository.save(demenziellErkrankter);
 
-        mockMvc.perform(get("/DemenziellErkrankte"))
+        mockMvc.perform(get("/demenziell-erkrankte"))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$[0].id").isNotEmpty())
                 .andExpect(jsonPath("$[0].name").isEmpty())
