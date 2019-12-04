@@ -44,6 +44,9 @@ public class DemenziellErkrankterTest {
         demenziellErkrankter = new DemenziellErkrankter();
     }
 
+    /**
+     * TODO: Was wird hier getestet???
+     */
     @Test
     public void PositionssenderShouldHaveDemenziellErkrankter()
     {
@@ -53,6 +56,9 @@ public class DemenziellErkrankterTest {
         assertThat(positionssender.getDemenziellErkrankter().getId(), equalTo(demenziellErkrankter.getId()));
     }
 
+    /**
+     * TODO: Was wird hier getestet???
+     */
     @Test
     public void DemenziellErkankterShouldHaveKontaktperson()
     {
@@ -74,9 +80,9 @@ public class DemenziellErkrankterTest {
     public void demenziellErkranterShouldBeAddedSuccessfully() throws Exception {
         demenziellErkrankterRepository.save(demenziellErkrankter);
 
-        mockMvc.perform(get("/DemenziellErkrankte"))
+        mockMvc.perform(get("/demenziell-erkrankte"))
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$[0].id").isNotEmpty())
+                .andExpect(jsonPath("$[0].id").value(demenziellErkrankter.getId().toString()))
                 .andExpect(jsonPath("$[0].name").isEmpty())
                 .andExpect(jsonPath("$[0].vorname").isEmpty())
                 .andExpect(jsonPath("$[0].zustimmung").isEmpty())
