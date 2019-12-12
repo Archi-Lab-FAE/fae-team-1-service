@@ -85,7 +85,6 @@ public class DemenziellErkrankterTest {
                 .andExpect(jsonPath("$[0].id").value(demenziellErkrankter.getId().toString()))
                 .andExpect(jsonPath("$[0].name").isEmpty())
                 .andExpect(jsonPath("$[0].vorname").isEmpty())
-                .andExpect(jsonPath("$[0].zustimmung").isEmpty())
                 .andExpect(jsonPath("$[0].schuhgroesse").isEmpty());
     }
 }
