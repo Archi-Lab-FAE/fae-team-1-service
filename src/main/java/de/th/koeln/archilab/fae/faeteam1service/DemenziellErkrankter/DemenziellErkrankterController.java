@@ -2,6 +2,8 @@ package de.th.koeln.archilab.fae.faeteam1service.DemenziellErkrankter;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -15,13 +17,22 @@ public class DemenziellErkrankterController {
     }
 
     @GetMapping("/demenziell-erkrankte")
-    public Iterable<DemenziellErkrankter> getallDemenziellErkrankter() {
-        return demenziellErkrankterRepository.findAll();
+    public Iterable<DemenziellErkrankterOutDaten> getallDemenziellErkrankter() {
+        List<DemenziellErkrankterOutDaten> outDaten = new ArrayList<DemenziellErkrankterOutDaten>();
+        for ( DemenziellErkrankter demenziellErkrankter: demenziellErkrankterRepository.findAll() ) {
+            outDaten.add(demenziellErkrankter.toOutFormat());
+        }
+        return outDaten;
     }
 
     @GetMapping("/demenziell-erkrankte/{id}")
-    public Optional<DemenziellErkrankter> getDemenziellErkrankterById(@PathVariable String id){
-        return demenziellErkrankterRepository.findById(UUID.fromString(id));
+    public DemenziellErkrankterOutDaten getDemenziellErkrankterById(@PathVariable String id){
+        Optional<DemenziellErkrankter> demenziellErkrankter = demenziellErkrankterRepository.findById(UUID.fromString(id));
+        DemenziellErkrankterOutDaten outDaten = new DemenziellErkrankterOutDaten();
+        if ( demenziellErkrankter.isPresent() ) {
+            outDaten = demenziellErkrankter.get().toOutFormat();
+        }
+        return outDaten;
     }
 
     @DeleteMapping("/demenziell-erkrankte/{id}")

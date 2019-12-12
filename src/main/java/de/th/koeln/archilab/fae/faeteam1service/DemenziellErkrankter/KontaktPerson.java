@@ -23,5 +23,16 @@ public class KontaktPerson {
     public KontaktPerson() {
         this.id = UUID.randomUUID().toString();
     }
+    public boolean hatZugestimmt(){
+        return zustimmung;
+    }
+    public KontakpersonOutDaten toOutFormat(){
+        KontakpersonOutDaten outDaten = new KontakpersonOutDaten();
+        outDaten.setId(this.id);
+        outDaten.setName(this.name);
+        outDaten.setVorname(this.vorname);
+        outDaten.setTelefonnummer(this.telefonnummer);
+        return outDaten;
+    }
 
 }
