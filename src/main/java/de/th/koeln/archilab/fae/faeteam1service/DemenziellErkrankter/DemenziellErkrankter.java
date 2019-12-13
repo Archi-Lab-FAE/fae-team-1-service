@@ -31,9 +31,9 @@ public class DemenziellErkrankter implements Serializable {
     public List<KontaktPerson> getKontaktPersonen() { return kontaktPersonen; }
 
     @OneToMany(targetEntity = Positionssender.class, mappedBy = "demenziellErkrankter")
-    private List<Positionssender> Positionen;
+    private List<Positionssender> positionen;
     public void setPositionssender(List<Positionssender> Positionen) {
-        this.Positionen = Positionen;
+        this.positionen = Positionen;
     }
 
 

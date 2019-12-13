@@ -10,5 +10,4 @@ import java.util.Date;
 public class PositionssenderOutDaten {
     private String Id;
     private Date letzteWartung;
-    private Point2D.Double Position;
 }

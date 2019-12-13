@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.awt.geom.Point2D;
 import java.util.Date;
 import java.util.UUID;
 
@@ -26,13 +25,10 @@ public class Positionssender {
     @Id
     private String id;
     private Date LetzteWartung;
-    private Point2D.Double Position;
 
 
-
-    public Positionssender( Date LetzteWartung, Point2D.Double Position){
+    public Positionssender(Date LetzteWartung){
         this.LetzteWartung = LetzteWartung;
-        this.Position = Position;
     }
 
     public Positionssender(){
@@ -42,14 +38,13 @@ public class Positionssender {
     public Date getLetzteWartung(){
         return LetzteWartung;
     }
-    public Point2D.Double getPosition(){
-        return Position;
-    }
 
 
+    /*
+     * TODO: WARNING: Gegenseitiger Verweis!
+     */
     @ManyToOne
     @JoinColumn( name = "DemenziellErkrankter", referencedColumnName = "id" )
-
     private DemenziellErkrankter demenziellErkrankter;
 
     public void setDemenziellErkrankter(DemenziellErkrankter demenziellErkrankter) {
@@ -64,7 +59,6 @@ public class Positionssender {
         PositionssenderOutDaten outDaten = new PositionssenderOutDaten();
         outDaten.setId(this.id);
         outDaten.setLetzteWartung(this.LetzteWartung);
-        outDaten.setPosition(this.Position);
 
         return outDaten;
     }
