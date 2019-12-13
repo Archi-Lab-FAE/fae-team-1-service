@@ -50,7 +50,7 @@ public class DemenziellErkrankterTest {
     @Test
     public void PositionssenderShouldHaveDemenziellErkrankter()
     {
-        Positionssender positionssender = new Positionssender(new Date(),new Point2D.Double());
+        Positionssender positionssender = new Positionssender(new Date());
         positionssender.setDemenziellErkrankter(demenziellErkrankter);
 
         assertThat(positionssender.getDemenziellErkrankter().getId(), equalTo(demenziellErkrankter.getId()));
