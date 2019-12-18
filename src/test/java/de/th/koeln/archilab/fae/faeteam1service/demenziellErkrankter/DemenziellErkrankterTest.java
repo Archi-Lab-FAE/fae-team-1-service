@@ -5,7 +5,7 @@ import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 
 import de.th.koeln.archilab.fae.faeteam1service.DemenziellErkrankter.DemenziellErkrankterRepository;
-import de.th.koeln.archilab.fae.faeteam1service.DemenziellErkrankter.KontaktPerson;
+import de.th.koeln.archilab.fae.faeteam1service.DemenziellErkrankter.Kontaktperson;
 import de.th.koeln.archilab.fae.faeteam1service.DemenziellErkrankter.Positionssender;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,13 +16,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.test.web.servlet.MockMvc;
-import static org.mockito.Mockito.*;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -42,38 +41,6 @@ public class DemenziellErkrankterTest {
     public void init()
     {
         demenziellErkrankter = new DemenziellErkrankter();
-    }
-
-    /**
-     * TODO: Was wird hier getestet???
-     */
-    @Test
-    public void PositionssenderShouldHaveDemenziellErkrankter()
-    {
-        Positionssender positionssender = new Positionssender(new Date());
-        positionssender.setDemenziellErkrankter(demenziellErkrankter);
-
-        assertThat(positionssender.getDemenziellErkrankter().getId(), equalTo(demenziellErkrankter.getId()));
-    }
-
-    /**
-     * TODO: Was wird hier getestet???
-     */
-    @Test
-    public void DemenziellErkankterShouldHaveKontaktperson()
-    {
-        KontaktPerson kontaktPerson = new KontaktPerson();
-        kontaktPerson.setVorname("KontaktVorname");
-        kontaktPerson.setName("KontaktName");
-        kontaktPerson.setZustimmung(true);
-        kontaktPerson.setTelefonnummer("0123/456789");
-
-        List<KontaktPerson> kontaktPersonList = new ArrayList<>();
-        kontaktPersonList.add(kontaktPerson);
-
-        demenziellErkrankter.setKontaktPersonen(kontaktPersonList);
-
-        assertThat(kontaktPersonList,equalTo(demenziellErkrankter.getKontaktPersonen()));
     }
 
     @Test

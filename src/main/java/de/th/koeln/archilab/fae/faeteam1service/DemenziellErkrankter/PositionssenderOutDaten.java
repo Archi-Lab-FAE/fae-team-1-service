@@ -3,7 +3,6 @@ package de.th.koeln.archilab.fae.faeteam1service.DemenziellErkrankter;
 
 import lombok.Data;
 
-import java.awt.geom.Point2D;
 import java.util.Date;
 
 @Data

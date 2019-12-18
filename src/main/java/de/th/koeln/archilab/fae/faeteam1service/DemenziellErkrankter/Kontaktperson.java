@@ -9,24 +9,23 @@ import javax.persistence.Table;
 import java.util.UUID;
 
 @Data
-@Entity
 @AllArgsConstructor
-@Table( name = "kontaktPersonen" )
-public class KontaktPerson {
+@Entity
+@Table(name = "kontaktPersonen")
+public class Kontaktperson {
+
     @Id
     private String id;
     private String name;
     private String vorname;
     private String telefonnummer;
-    private Boolean zustimmung;
+    private Boolean aktiv;
 
-    public KontaktPerson() {
+    public Kontaktperson() {
         this.id = UUID.randomUUID().toString();
     }
-    public boolean hatZugestimmt(){
-        return zustimmung;
-    }
-    public KontakpersonOutDaten toOutFormat(){
+
+    public KontakpersonOutDaten toOutFormat() {
         KontakpersonOutDaten outDaten = new KontakpersonOutDaten();
         outDaten.setId(this.id);
         outDaten.setName(this.name);
