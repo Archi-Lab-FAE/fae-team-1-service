@@ -24,7 +24,7 @@ public class DemenziellErkrankterController {
 
     @GetMapping("/demenziell-erkrankte/{id}")
     public DemenziellErkrankterOutDaten getDemenziellErkrankterById(@PathVariable String id) {
-        Optional<DemenziellErkrankter> demenziellErkrankter = demenziellErkrankterRepository.findById(UUID.fromString(id));
+        Optional<DemenziellErkrankter> demenziellErkrankter = demenziellErkrankterRepository.findById(id);
         DemenziellErkrankterOutDaten outDaten = new DemenziellErkrankterOutDaten();
         if (demenziellErkrankter.isPresent()) {
             outDaten = demenziellErkrankter.get().toOutFormat();
@@ -44,7 +44,7 @@ public class DemenziellErkrankterController {
 
     @DeleteMapping("/demenziell-erkrankte/{id}")
     public void deleteDemenziellErkrankterById(@PathVariable String id) {
-        demenziellErkrankterRepository.deleteById(UUID.fromString(id));
+        demenziellErkrankterRepository.deleteById(id);
     }
 
     /* ##########################
@@ -53,15 +53,15 @@ public class DemenziellErkrankterController {
 
     @GetMapping("/demenziell-erkrankte/{demenziellErkrankterId}/kontaktpersonen")
     public Iterable<Kontaktperson> getAllKontaktpersonenForDemenziellErkrankten(@PathVariable String demenziellErkrankterId) {
-        return demenziellErkrankterRepository.findById(UUID.fromString(demenziellErkrankterId)).map(DemenziellErkrankter::getKontaktpersonen)
+        return demenziellErkrankterRepository.findById(demenziellErkrankterId).map(DemenziellErkrankter::getKontaktpersonen)
                 .orElseThrow(DemenziellErkrankterNotFoundException::new);
     }
 
-    @GetMapping("/demenziell-erkrankte/{demenziellErkrankterId}/kontaktpersonen/{kpid}")
-    public Kontaktperson getKontaktpersonById(@PathVariable String demenziellErkrankterId, @PathVariable String kpid) {
-        return demenziellErkrankterRepository.findById(UUID.fromString(demenziellErkrankterId)).map(demenziellErkrankter -> {
+    @GetMapping("/demenziell-erkrankte/{demenziellErkrankterId}/kontaktpersonen/{kontaktPersonId}")
+    public Kontaktperson getKontaktpersonById(@PathVariable String demenziellErkrankterId, @PathVariable String kontaktPersonId) {
+        return demenziellErkrankterRepository.findById(demenziellErkrankterId).map(demenziellErkrankter -> {
             for (Kontaktperson kontaktperson : demenziellErkrankter.getKontaktpersonen()) {
-                if (kontaktperson.getId().equals(kpid)) {
+                if (kontaktperson.getId().equals(kontaktPersonId)) {
                     return kontaktperson;
                 }
             }
@@ -69,34 +69,34 @@ public class DemenziellErkrankterController {
         }).orElseThrow(DemenziellErkrankterNotFoundException::new);
     }
 
-    // TODO: should return Kontaktperson
-    @PostMapping("/demenziell-erkrankte/{demenziellErkrankterId}/kontaktpersonen/{kpid}")
-    public DemenziellErkrankter newKontaktpersonForDemenziellErkrankten(@RequestBody Kontaktperson kontaktperson, @PathVariable String demenziellErkrankterId, @PathVariable String kpid) {
-        return demenziellErkrankterRepository.save(demenziellErkrankterRepository.findById(UUID.fromString(demenziellErkrankterId)).map(demenziellErkrankter -> {
+    @PostMapping("/demenziell-erkrankte/{demenziellErkrankterId}/kontaktpersonen")
+    public Kontaktperson newKontaktpersonForDemenziellErkrankten(@RequestBody Kontaktperson kontaktperson, @PathVariable String demenziellErkrankterId) {
+        demenziellErkrankterRepository.save(demenziellErkrankterRepository.findById(demenziellErkrankterId).map(demenziellErkrankter -> {
             List<Kontaktperson> kontaktpersonen = demenziellErkrankter.getKontaktpersonen();
             kontaktpersonen.add(kontaktperson);
             demenziellErkrankter.setKontaktpersonen(kontaktpersonen);
             return demenziellErkrankter;
         }).orElseThrow(DemenziellErkrankterNotFoundException::new));
+        return kontaktperson;
     }
 
-    // TODO: should return Kontaktperson
-    @PutMapping("/demenziell-erkrankte/{demenziellErkrankterId}/kontaktpersonen/{kpid}")
-    public DemenziellErkrankter updateKontaktpersonForDemenziellErkrankten(@RequestBody Kontaktperson kontaktperson, @PathVariable String demenziellErkrankterId, @PathVariable String kpid) {
-        return demenziellErkrankterRepository.save(demenziellErkrankterRepository.findById(UUID.fromString(demenziellErkrankterId)).map(demenziellErkrankter -> {
+    @PutMapping("/demenziell-erkrankte/{demenziellErkrankterId}/kontaktpersonen/{kontaktPersonId}")
+    public Kontaktperson updateKontaktpersonForDemenziellErkrankten(@RequestBody Kontaktperson kontaktperson, @PathVariable String demenziellErkrankterId, @PathVariable String kontaktPersonId) {
+        demenziellErkrankterRepository.save(demenziellErkrankterRepository.findById(demenziellErkrankterId).map(demenziellErkrankter -> {
             List<Kontaktperson> kontaktpersonen = demenziellErkrankter.getKontaktpersonen();
-            kontaktpersonen.removeIf(existingKontaktperson -> existingKontaktperson.getId().equals(kpid));
+            kontaktpersonen.removeIf(existingKontaktperson -> existingKontaktperson.getId().equals(kontaktPersonId));
             kontaktpersonen.add(kontaktperson);
             demenziellErkrankter.setKontaktpersonen(kontaktpersonen);
             return demenziellErkrankter;
         }).orElseThrow(DemenziellErkrankterNotFoundException::new));
+        return kontaktperson;
     }
 
-    @DeleteMapping("/demenziell-erkrankte/{demenziellErkrankterId}/kontaktpersonen/{kpid}")
-    public void deleteKontaktpersonForDemenziellErkrankten(@PathVariable String demenziellErkrankterId, @PathVariable String kpid) {
-        demenziellErkrankterRepository.save(demenziellErkrankterRepository.findById(UUID.fromString(demenziellErkrankterId)).map(demenziellErkrankter -> {
+    @DeleteMapping("/demenziell-erkrankte/{demenziellErkrankterId}/kontaktpersonen/{kontaktPersonId}")
+    public void deleteKontaktpersonForDemenziellErkrankten(@PathVariable String demenziellErkrankterId, @PathVariable String kontaktPersonId) {
+        demenziellErkrankterRepository.save(demenziellErkrankterRepository.findById(demenziellErkrankterId).map(demenziellErkrankter -> {
             List<Kontaktperson> kontaktpersonen = demenziellErkrankter.getKontaktpersonen();
-            kontaktpersonen.removeIf(existingKontaktperson -> existingKontaktperson.getId().equals(kpid));
+            kontaktpersonen.removeIf(existingKontaktperson -> existingKontaktperson.getId().equals(kontaktPersonId));
             demenziellErkrankter.setKontaktpersonen(kontaktpersonen);
             return demenziellErkrankter;
         }).orElseThrow(DemenziellErkrankterNotFoundException::new));
