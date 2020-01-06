@@ -22,13 +22,5 @@ public class Positionssender {
     public Positionssender() {
         this.id = UUID.randomUUID().toString();
     }
-
-    public PositionssenderOutDaten toOutFormat() {
-        PositionssenderOutDaten outDaten = new PositionssenderOutDaten();
-        outDaten.setId(this.id);
-        outDaten.setLetzteWartung(this.letzteWartung);
-
-        return outDaten;
-    }
 }
 

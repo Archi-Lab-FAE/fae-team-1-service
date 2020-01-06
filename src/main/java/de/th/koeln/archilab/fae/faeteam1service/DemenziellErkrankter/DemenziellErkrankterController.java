@@ -15,23 +15,18 @@ public class DemenziellErkrankterController {
         this.demenziellErkrankterRepository = demenziellErkrankterRepository;
     }
 
+    /* #################################
+       # Endpunkt DemenziellErkrankter #
+       ################################# */
+
     @GetMapping("/demenziell-erkrankte")
-    public Iterable<DemenziellErkrankterOutDaten> getAllDemenziellErkrankte() {
-        List<DemenziellErkrankterOutDaten> outDaten = new ArrayList<>();
-        for (DemenziellErkrankter demenziellErkrankter : demenziellErkrankterRepository.findAll()) {
-            outDaten.add(demenziellErkrankter.toOutFormat());
-        }
-        return outDaten;
+    public Iterable<DemenziellErkrankter> getAllDemenziellErkrankte() {
+        return demenziellErkrankterRepository.findAll();
     }
 
     @GetMapping("/demenziell-erkrankte/{id}")
-    public DemenziellErkrankterOutDaten getDemenziellErkrankterById(@PathVariable String id) {
-        Optional<DemenziellErkrankter> demenziellErkrankter = demenziellErkrankterRepository.findById(id);
-        DemenziellErkrankterOutDaten outDaten = new DemenziellErkrankterOutDaten();
-        if (demenziellErkrankter.isPresent()) {
-            outDaten = demenziellErkrankter.get().toOutFormat();
-        }
-        return outDaten;
+    public DemenziellErkrankter getDemenziellErkrankterById(@PathVariable String id) {
+        return demenziellErkrankterRepository.findById(id).orElseThrow(DemenziellErkrankterNotFoundException::new);
     }
 
     @PostMapping("/demenziell-erkrankte")

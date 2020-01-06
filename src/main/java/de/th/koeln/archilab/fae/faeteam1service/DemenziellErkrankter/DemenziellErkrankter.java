@@ -32,17 +32,4 @@ public class DemenziellErkrankter implements Serializable {
     public DemenziellErkrankter() {
         this.id = UUID.randomUUID().toString();
     }
-
-    public DemenziellErkrankterOutDaten toOutFormat() {
-        DemenziellErkrankterOutDaten outDaten = new DemenziellErkrankterOutDaten();
-        outDaten.setId(this.id);
-        outDaten.setName(this.name);
-        outDaten.setVorname(this.vorname);
-        for (Kontaktperson kontaktPerson : this.kontaktpersonen) {
-            if (kontaktPerson.getAktiv()) {
-                outDaten.addKontaktperson(kontaktPerson.toOutFormat());
-            }
-        }
-        return outDaten;
-    }
 }
