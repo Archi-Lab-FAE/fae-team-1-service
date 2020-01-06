@@ -2,7 +2,9 @@ package de.th.koeln.archilab.fae.faeteam1service.DemenziellErkrankter;
 
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class DemenziellErkrankterController {
@@ -98,6 +100,61 @@ public class DemenziellErkrankterController {
             List<Kontaktperson> kontaktpersonen = demenziellErkrankter.getKontaktpersonen();
             kontaktpersonen.removeIf(existingKontaktperson -> existingKontaktperson.getId().equals(kontaktPersonId));
             demenziellErkrankter.setKontaktpersonen(kontaktpersonen);
+            return demenziellErkrankter;
+        }).orElseThrow(DemenziellErkrankterNotFoundException::new));
+    }
+
+    /* ###########################
+       # Endpunkt Positionsender #
+       ########################### */
+
+    @GetMapping("/demenziell-erkrankte/{demenziellErkrankterId}/positionssender")
+    public Iterable<Positionssender> getAllPositionssenderForDemenziellErkrankten(@PathVariable String demenziellErkrankterId) {
+        return demenziellErkrankterRepository.findById(demenziellErkrankterId).map(DemenziellErkrankter::getPositionssender)
+                .orElseThrow(DemenziellErkrankterNotFoundException::new);
+    }
+
+    @GetMapping("/demenziell-erkrankte/{demenziellErkrankterId}/positionssender/{positionssenderId}")
+    public Positionssender getPositionssenderById(@PathVariable String demenziellErkrankterId, @PathVariable String positionssenderId) {
+        return demenziellErkrankterRepository.findById(demenziellErkrankterId).map(demenziellErkrankter -> {
+            for (Positionssender positionssender : demenziellErkrankter.getPositionssender()) {
+                if (positionssender.getId().equals(positionssenderId)) {
+                    return positionssender;
+                }
+            }
+            throw new PositionssenderNotFoundException();
+        }).orElseThrow(DemenziellErkrankterNotFoundException::new);
+    }
+
+    @PostMapping("/demenziell-erkrankte/{demenziellErkrankterId}/positionssender")
+    public Positionssender newPositionssenderForDemenziellErkrankten(@RequestBody Positionssender positionssender, @PathVariable String demenziellErkrankterId) {
+        demenziellErkrankterRepository.save(demenziellErkrankterRepository.findById(demenziellErkrankterId).map(demenziellErkrankter -> {
+            List<Positionssender> positionssenderList = demenziellErkrankter.getPositionssender();
+            positionssenderList.add(positionssender);
+            demenziellErkrankter.setPositionssender(positionssenderList);
+            return demenziellErkrankter;
+        }).orElseThrow(DemenziellErkrankterNotFoundException::new));
+        return positionssender;
+    }
+
+    @PutMapping("/demenziell-erkrankte/{demenziellErkrankterId}/positionssender/{positionssenderId}")
+    public Positionssender updatePositionssenderForDemenziellErkrankten(@RequestBody Positionssender positionssender, @PathVariable String demenziellErkrankterId, @PathVariable String positionssenderId) {
+        demenziellErkrankterRepository.save(demenziellErkrankterRepository.findById(demenziellErkrankterId).map(demenziellErkrankter -> {
+            List<Positionssender> positionssenderList = demenziellErkrankter.getPositionssender();
+            positionssenderList.removeIf(existingPositionssender -> existingPositionssender.getId().equals(positionssenderId));
+            positionssenderList.add(positionssender);
+            demenziellErkrankter.setPositionssender(positionssenderList);
+            return demenziellErkrankter;
+        }).orElseThrow(DemenziellErkrankterNotFoundException::new));
+        return positionssender;
+    }
+
+    @DeleteMapping("/demenziell-erkrankte/{demenziellErkrankterId}/positionssender/{positionssenderId}")
+    public void deletePositionssenderForDemenziellErkrankten(@PathVariable String demenziellErkrankterId, @PathVariable String positionssenderId) {
+        demenziellErkrankterRepository.save(demenziellErkrankterRepository.findById(demenziellErkrankterId).map(demenziellErkrankter -> {
+            List<Positionssender> positionssenderList = demenziellErkrankter.getPositionssender();
+            positionssenderList.removeIf(existingPositionssender -> existingPositionssender.getId().equals(positionssenderId));
+            demenziellErkrankter.setPositionssender(positionssenderList);
             return demenziellErkrankter;
         }).orElseThrow(DemenziellErkrankterNotFoundException::new));
     }
