@@ -6,176 +6,150 @@
 	},
 	"item": [
 		{
-			"name": "Alarmknopf",
-			"item": [
-				{
-					"name": "/alarmknoepfe",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/alarmknoepfe",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"alarmknoepfe"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "/alarmknoepfe/{id}",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/alarmknoepfe/{{alarmknopf_id}}",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"alarmknoepfe",
-								"{{alarmknopf_id}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "/alarmknoepfe",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "3a683f66-16f3-4d00-a1b0-f7dc0ac9dd0f",
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"id": "4edb6914-027d-4f3f-879d-bfbb5d1d9020",
-								"exec": [
-									"var jsonData = JSON.parse(responseBody);",
-									"pm.environment.set(\"alarmknopf_id\", jsonData.id);"
-								],
-								"type": "text/javascript"
-							}
-						}
+			"name": "/demenziell-erkrankte",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/demenziell-erkrankte",
+					"protocol": "http",
+					"host": [
+						"localhost"
 					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
+					"port": "8081",
+					"path": [
+						"demenziell-erkrankte"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/demenziell-erkrankte",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c1d22558-dbca-498a-9b9a-cea1e6f7850e",
+						"exec": [
+							"pm.environment.set(\"demenziellErkrankterId\", (JSON.parse(responseBody)).id);"
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"position\": {\n\t\t\"x\": 0.5364,\n\t\t\"y\": 1.258\n\t},\n\t\"telefonnummer\": \"74572984583\"\n}"
-						},
-						"url": {
-							"raw": "localhost:8080/alarmknoepfe",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"alarmknoepfe"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "/alarmknoepfe/{id}",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "e57545c8-dae8-4705-8032-f184f650f349",
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"id\": \"{{alarmknopf_id}}\",\n\t\"position\": {\n\t\t\"x\": 3.9072,\n\t\t\"y\": 2.9743\n\t},\n\t\"telefonnummer\": \"+49 (839) 1027 7894301\"\n}"
-						},
-						"url": {
-							"raw": "localhost:8080/alarmknoepfe/{{alarmknopf_id}}",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"alarmknoepfe",
-								"{{alarmknopf_id}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "/alarmknoepfe",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/alarmknoepfe",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"alarmknoepfe"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "/alarmknoepfe/{id}",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/alarmknoepfe/{{alarmknopf_id}}",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"alarmknoepfe",
-								"{{alarmknopf_id}}"
-							]
-						}
-					},
-					"response": []
+						"type": "text/javascript"
+					}
 				}
 			],
-			"protocolProfileBehavior": {}
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Mustermann\",\r\n  \"vorname\": \"Max\",\r\n  \"zustimmung\": true,\r\n  \"kontaktpersonen\": [\r\n    {\r\n      \"name\": \"Herbert\",\r\n      \"vorname\": \"Heinz\",\r\n      \"telefonnummer\": \"0123456789\",\r\n      \"aktiv\": true\r\n    }\r\n  ],\r\n  \"positionssender\": [\r\n    {\r\n      \"letzteWartung\": \"2020-01-06T11:40:32.469Z\"\r\n    }\r\n  ]\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8081/demenziell-erkrankte",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"demenziell-erkrankte"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/demenziell-erkrankte/{{demenziellErkrankterId}}/kontaktpersonen",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/demenziell-erkrankte/{{demenziellErkrankterId}}/kontaktpersonen",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"demenziell-erkrankte",
+						"{{demenziellErkrankterId}}",
+						"kontaktpersonen"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/demenziell-erkrankte/{{demenziellErkrankterId}}/kontaktpersonen/{{kontaktPersonId}}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/demenziell-erkrankte/{{demenziellErkrankterId}}/kontaktpersonen/{{kontaktPersonId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"demenziell-erkrankte",
+						"{{demenziellErkrankterId}}",
+						"kontaktpersonen",
+						"{{kontaktPersonId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/demenziell-erkrankte/{{demenziellErkrankterId}}/kontaktpersonen",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f6ae724d-32fe-4666-b916-4abd9f9fe64f",
+						"exec": [
+							"pm.environment.set(\"kontaktPersonId\", (JSON.parse(responseBody)).id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Klose\",\r\n  \"vorname\": \"Karl\",\r\n  \"telefonnummer\": \"0987654321\",\r\n  \"aktiv\": true\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8081/demenziell-erkrankte/{{demenziellErkrankterId}}/kontaktpersonen",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"demenziell-erkrankte",
+						"{{demenziellErkrankterId}}",
+						"kontaktpersonen"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}
