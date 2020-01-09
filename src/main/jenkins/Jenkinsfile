@@ -21,7 +21,7 @@ node {
         } finally {
             junit 'target/surefire-reports/*.xml'
         }
-        /*
+
         stage('Quality Check') {
             sh 'mvn -B -s settings.xml checkstyle:checkstyle'
             jacoco()
@@ -44,7 +44,7 @@ node {
                 }
             }
         }
-        */
+
         stage('Build Production') {
             withCredentials([usernamePassword(credentialsId: 'archilab-nexus-jenkins',
                     usernameVariable: 'NEXUS_USERNAME', passwordVariable: 'NEXUS_PASSWORD')]) {
