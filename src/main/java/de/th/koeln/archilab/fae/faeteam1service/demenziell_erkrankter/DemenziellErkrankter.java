@@ -1,4 +1,4 @@
-package de.th.koeln.archilab.fae.faeteam1service.DemenziellErkrankter;
+package de.th.koeln.archilab.fae.faeteam1service.demenziell_erkrankter;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,5 +31,14 @@ public class DemenziellErkrankter implements Serializable {
 
     public DemenziellErkrankter() {
         this.id = UUID.randomUUID().toString();
+    }
+
+    public DemenziellErkrankter(DemenziellErkrankterDTO demenziellErkrankterDTO) {
+        this.setId(demenziellErkrankterDTO.getId());
+        this.setName(demenziellErkrankterDTO.getName());
+        this.setVorname(demenziellErkrankterDTO.getVorname());
+        this.setZustimmung(demenziellErkrankterDTO.getZustimmung());
+        this.setKontaktpersonen(demenziellErkrankterDTO.getKontaktpersonen());
+        this.setPositionssender(demenziellErkrankterDTO.getPositionssender());
     }
 }

@@ -1,7 +1,7 @@
 package de.th.koeln.archilab.fae.faeteam1service.demenziellErkrankter;
 
-import de.th.koeln.archilab.fae.faeteam1service.DemenziellErkrankter.DemenziellErkrankter;
-import de.th.koeln.archilab.fae.faeteam1service.DemenziellErkrankter.DemenziellErkrankterRepository;
+import de.th.koeln.archilab.fae.faeteam1service.demenziell_erkrankter.DemenziellErkrankter;
+import de.th.koeln.archilab.fae.faeteam1service.demenziell_erkrankter.DemenziellErkrankterRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

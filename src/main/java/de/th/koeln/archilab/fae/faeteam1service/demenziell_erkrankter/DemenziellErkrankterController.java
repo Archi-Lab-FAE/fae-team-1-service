@@ -1,4 +1,4 @@
-package de.th.koeln.archilab.fae.faeteam1service.DemenziellErkrankter;
+package de.th.koeln.archilab.fae.faeteam1service.demenziell_erkrankter;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -103,8 +103,8 @@ public class DemenziellErkrankterController {
             }
     )
     @PostMapping("/demenziell-erkrankte")
-    public DemenziellErkrankter createDemenziellErkrankter(@RequestBody DemenziellErkrankter demenziellErkrankter) {
-        return demenziellErkrankterRepository.save(demenziellErkrankter);
+    public DemenziellErkrankter createDemenziellErkrankter(@RequestBody DemenziellErkrankterDTO demenziellErkrankter) {
+        return demenziellErkrankterRepository.save(new DemenziellErkrankter(demenziellErkrankter));
     }
 
     @Operation(
@@ -138,8 +138,8 @@ public class DemenziellErkrankterController {
             }
     )
     @PutMapping("/demenziell-erkrankte/{id}")
-    public DemenziellErkrankter updateDemenziellErkrankter(@RequestBody DemenziellErkrankter demenziellErkrankter, @PathVariable String id) {
-        return demenziellErkrankterRepository.save(demenziellErkrankter);
+    public DemenziellErkrankter updateDemenziellErkrankter(@RequestBody DemenziellErkrankterDTO demenziellErkrankter, @PathVariable String id) {
+        return demenziellErkrankterRepository.save(new DemenziellErkrankter(demenziellErkrankter));
     }
 
     @Operation(
@@ -295,14 +295,14 @@ public class DemenziellErkrankterController {
             }
     )
     @PostMapping("/demenziell-erkrankte/{demenziellErkrankterId}/kontaktpersonen")
-    public Kontaktperson createKontaktpersonForDemenziellErkrankten(@RequestBody Kontaktperson kontaktperson, @PathVariable String demenziellErkrankterId) {
+    public Kontaktperson createKontaktpersonForDemenziellErkrankten(@RequestBody KontaktpersonDTO kontaktperson, @PathVariable String demenziellErkrankterId) {
         demenziellErkrankterRepository.save(demenziellErkrankterRepository.findById(demenziellErkrankterId).map(demenziellErkrankter -> {
             List<Kontaktperson> kontaktpersonen = demenziellErkrankter.getKontaktpersonen();
-            kontaktpersonen.add(kontaktperson);
+            kontaktpersonen.add(new Kontaktperson(kontaktperson));
             demenziellErkrankter.setKontaktpersonen(kontaktpersonen);
             return demenziellErkrankter;
         }).orElseThrow(DemenziellErkrankterNotFoundException::new));
-        return kontaktperson;
+        return new Kontaktperson(kontaktperson);
     }
 
     @Operation(
@@ -350,15 +350,15 @@ public class DemenziellErkrankterController {
             }
     )
     @PutMapping("/demenziell-erkrankte/{demenziellErkrankterId}/kontaktpersonen/{kontaktPersonId}")
-    public Kontaktperson updateKontaktpersonForDemenziellErkrankten(@RequestBody Kontaktperson kontaktperson, @PathVariable String demenziellErkrankterId, @PathVariable String kontaktPersonId) {
+    public Kontaktperson updateKontaktpersonForDemenziellErkrankten(@RequestBody KontaktpersonDTO kontaktperson, @PathVariable String demenziellErkrankterId, @PathVariable String kontaktPersonId) {
         demenziellErkrankterRepository.save(demenziellErkrankterRepository.findById(demenziellErkrankterId).map(demenziellErkrankter -> {
             List<Kontaktperson> kontaktpersonen = demenziellErkrankter.getKontaktpersonen();
             kontaktpersonen.removeIf(existingKontaktperson -> existingKontaktperson.getId().equals(kontaktPersonId));
-            kontaktpersonen.add(kontaktperson);
+            kontaktpersonen.add(new Kontaktperson(kontaktperson));
             demenziellErkrankter.setKontaktpersonen(kontaktpersonen);
             return demenziellErkrankter;
         }).orElseThrow(DemenziellErkrankterNotFoundException::new));
-        return kontaktperson;
+        return new Kontaktperson(kontaktperson);
     }
 
     @Operation(
@@ -536,14 +536,14 @@ public class DemenziellErkrankterController {
             }
     )
     @PostMapping("/demenziell-erkrankte/{demenziellErkrankterId}/positionssender")
-    public Positionssender createPositionssenderForDemenziellErkrankten(@RequestBody Positionssender positionssender, @PathVariable String demenziellErkrankterId) {
+    public Positionssender createPositionssenderForDemenziellErkrankten(@RequestBody PositionssenderDTO positionssender, @PathVariable String demenziellErkrankterId) {
         demenziellErkrankterRepository.save(demenziellErkrankterRepository.findById(demenziellErkrankterId).map(demenziellErkrankter -> {
             List<Positionssender> positionssenderList = demenziellErkrankter.getPositionssender();
-            positionssenderList.add(positionssender);
+            positionssenderList.add(new Positionssender(positionssender));
             demenziellErkrankter.setPositionssender(positionssenderList);
             return demenziellErkrankter;
         }).orElseThrow(DemenziellErkrankterNotFoundException::new));
-        return positionssender;
+        return new Positionssender(positionssender);
     }
 
     @Operation(
@@ -591,15 +591,15 @@ public class DemenziellErkrankterController {
             }
     )
     @PutMapping("/demenziell-erkrankte/{demenziellErkrankterId}/positionssender/{positionssenderId}")
-    public Positionssender updatePositionssenderForDemenziellErkrankten(@RequestBody Positionssender positionssender, @PathVariable String demenziellErkrankterId, @PathVariable String positionssenderId) {
+    public Positionssender updatePositionssenderForDemenziellErkrankten(@RequestBody PositionssenderDTO positionssender, @PathVariable String demenziellErkrankterId, @PathVariable String positionssenderId) {
         demenziellErkrankterRepository.save(demenziellErkrankterRepository.findById(demenziellErkrankterId).map(demenziellErkrankter -> {
             List<Positionssender> positionssenderList = demenziellErkrankter.getPositionssender();
             positionssenderList.removeIf(existingPositionssender -> existingPositionssender.getId().equals(positionssenderId));
-            positionssenderList.add(positionssender);
+            positionssenderList.add(new Positionssender(positionssender));
             demenziellErkrankter.setPositionssender(positionssenderList);
             return demenziellErkrankter;
         }).orElseThrow(DemenziellErkrankterNotFoundException::new));
-        return positionssender;
+        return new Positionssender(positionssender);
     }
 
     @Operation(
