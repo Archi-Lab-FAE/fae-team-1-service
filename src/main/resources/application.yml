@@ -38,8 +38,8 @@ springdoc:
   version: '@springdoc.version@'
   api-docs:
     enabled: true
-    path: /team-1/v3/api-docs
+    path: /v3/api-docs
   swagger-ui:
-    path: /team-1/swagger-ui.html
+    path: /swagger-ui
     displayRequestDuration: true
     tagsSorter: alpha
