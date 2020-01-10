@@ -14,7 +14,7 @@
     <artifactId>fae-team-1-service-ms</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>fae-team-1-service</name>
+    <name>fae-team-1-service-ms</name>
     <description>Microservice Project for Team 1 FAE 2019/20</description>
 
     <properties>
