@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   springboot-service:
-    image: docker.nexus.archi-lab.io/archilab/fae-team-1-service:${TAG}
+    image: docker.nexus.archi-lab.io/archilab/fae-team-1-service-ms:${TAG}
     deploy:
       replicas: 2
       update_config:
