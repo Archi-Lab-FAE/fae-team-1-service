@@ -55,7 +55,7 @@ node {
             }
         }
     }
-       /*
+
     // TODO Students: add docker compose files
      stage('Deploy') {
         docker.withServer('tcp://10.10.10.61:2376', 'fae-ws2019-certs') {
@@ -65,5 +65,5 @@ node {
                     -c src/main/docker/docker-compose-prod.yml ${image}"
             }
         }
-    }*/
+    }
 }
