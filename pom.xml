@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>de.th.koeln.archilab.fae</groupId>
-    <artifactId>fae-team-1-service</artifactId>
+    <artifactId>fae-team-1-service-ms</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <name>fae-team-1-service</name>

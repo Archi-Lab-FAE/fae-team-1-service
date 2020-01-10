@@ -1,7 +1,7 @@
 # Spring
 spring:
   application:
-    name: fae-team-1-service
+    name: fae-team-1-service-ms
   profiles:
     active: local
   # Hibernate ddl auto
