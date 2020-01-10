@@ -1,7 +1,7 @@
 # Spring
 spring:
   application:
-    name: fae-team-1-service-ms
+    name: fae-team-1-service
   profiles:
     active: local
   # Hibernate ddl auto
@@ -28,7 +28,7 @@ spring:
     deserialization:
       accept-empty-array-as-null-object: true
   kafka:
-    group-id: "shop-demo"
+    group-id: "fae-team-1-service"
 
 # Server
 server:

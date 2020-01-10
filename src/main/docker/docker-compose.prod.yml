@@ -17,3 +17,9 @@ services:
     environment:
       - TZ=Europe/Berlin
       - SPRING_PROFILES_ACTIVE=prod
+    networks:
+      - fae_backend
+
+networks:
+  fae_backend:
+    external: true
