@@ -6,8 +6,10 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -82,7 +84,7 @@ public class DemenziellErkrankterController {
             summary = "Demenziell Erkrankten anlegen",
             responses = {
                     @ApiResponse(
-                            responseCode = "200",
+                            responseCode = "201",
                             description = "Demenziell Erkrankter wird angelegt und ausgegeben",
                             content = @Content(
                                     mediaType = "application/json",
@@ -103,6 +105,7 @@ public class DemenziellErkrankterController {
             }
     )
     @PostMapping("/demenziell-erkrankte")
+    @ResponseStatus(HttpStatus.CREATED)
     public DemenziellErkrankter createDemenziellErkrankter(@RequestBody DemenziellErkrankterDTO demenziellErkrankter) {
         return demenziellErkrankterRepository.save(new DemenziellErkrankter(demenziellErkrankter));
     }
@@ -112,7 +115,15 @@ public class DemenziellErkrankterController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Demenziell Erkrankter mit gegebener ID wird aktualisiert/angelegt und ausgegeben",
+                            description = "Demenziell Erkrankter mit gegebener ID wird aktualisiert und ausgegeben",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = DemenziellErkrankter.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "201",
+                            description = "Demenziell Erkrankter mit gegebener ID wird angelegt und ausgegeben",
                             content = @Content(
                                     mediaType = "application/json",
                                     schema = @Schema(implementation = DemenziellErkrankter.class)
@@ -138,7 +149,11 @@ public class DemenziellErkrankterController {
             }
     )
     @PutMapping("/demenziell-erkrankte/{id}")
-    public DemenziellErkrankter updateDemenziellErkrankter(@RequestBody DemenziellErkrankterDTO demenziellErkrankter, @PathVariable String id) {
+    public DemenziellErkrankter updateDemenziellErkrankter(@RequestBody DemenziellErkrankterDTO demenziellErkrankter, @PathVariable String id, HttpServletResponse response) {
+        if (!demenziellErkrankterRepository.findById(id).isPresent()) {
+            response.setStatus(HttpServletResponse.SC_CREATED);
+        }
+        demenziellErkrankter.setId(id);
         return demenziellErkrankterRepository.save(new DemenziellErkrankter(demenziellErkrankter));
     }
 
@@ -146,7 +161,7 @@ public class DemenziellErkrankterController {
             summary = "Demenziell Erkrankten mit ID löschen",
             responses = {
                     @ApiResponse(
-                            responseCode = "200",
+                            responseCode = "204",
                             description = "Demenziell Erkrankter mit gegebener ID wird gelöscht"
                     )
             },
@@ -160,6 +175,7 @@ public class DemenziellErkrankterController {
             }
     )
     @DeleteMapping("/demenziell-erkrankte/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteDemenziellErkrankterById(@PathVariable String id) {
         demenziellErkrankterRepository.deleteById(id);
     }
@@ -260,7 +276,7 @@ public class DemenziellErkrankterController {
             summary = "Kontaktpersonen für Demenziell Erkrankten anlegen",
             responses = {
                     @ApiResponse(
-                            responseCode = "200",
+                            responseCode = "201",
                             description = "Kontaktperson wird angelegt und ausgegeben",
                             content = @Content(
                                     mediaType = "application/json",
@@ -295,14 +311,16 @@ public class DemenziellErkrankterController {
             }
     )
     @PostMapping("/demenziell-erkrankte/{demenziellErkrankterId}/kontaktpersonen")
+    @ResponseStatus(HttpStatus.CREATED)
     public Kontaktperson createKontaktpersonForDemenziellErkrankten(@RequestBody KontaktpersonDTO kontaktperson, @PathVariable String demenziellErkrankterId) {
-        demenziellErkrankterRepository.save(demenziellErkrankterRepository.findById(demenziellErkrankterId).map(demenziellErkrankter -> {
+        return demenziellErkrankterRepository.save(demenziellErkrankterRepository.findById(demenziellErkrankterId).map(demenziellErkrankter -> {
             List<Kontaktperson> kontaktpersonen = demenziellErkrankter.getKontaktpersonen();
             kontaktpersonen.add(new Kontaktperson(kontaktperson));
             demenziellErkrankter.setKontaktpersonen(kontaktpersonen);
             return demenziellErkrankter;
-        }).orElseThrow(DemenziellErkrankterNotFoundException::new));
-        return new Kontaktperson(kontaktperson);
+        }).orElseThrow(DemenziellErkrankterNotFoundException::new))
+                .getKontaktpersonen().parallelStream().filter(kontaktpersonFromRepo -> kontaktpersonFromRepo.getId().equals(kontaktperson.getId()))
+                .findFirst().orElseThrow(KontaktpersonNotFoundException::new);
     }
 
     @Operation(
@@ -310,7 +328,15 @@ public class DemenziellErkrankterController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Kontaktperson wird aktualisiert/angelegt und ausgegeben",
+                            description = "Kontaktperson wird aktualisiert und ausgegeben",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = Kontaktperson.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "201",
+                            description = "Kontaktperson wird angelegt und ausgegeben",
                             content = @Content(
                                     mediaType = "application/json",
                                     schema = @Schema(implementation = Kontaktperson.class)
@@ -350,22 +376,26 @@ public class DemenziellErkrankterController {
             }
     )
     @PutMapping("/demenziell-erkrankte/{demenziellErkrankterId}/kontaktpersonen/{kontaktPersonId}")
-    public Kontaktperson updateKontaktpersonForDemenziellErkrankten(@RequestBody KontaktpersonDTO kontaktperson, @PathVariable String demenziellErkrankterId, @PathVariable String kontaktPersonId) {
-        demenziellErkrankterRepository.save(demenziellErkrankterRepository.findById(demenziellErkrankterId).map(demenziellErkrankter -> {
+    public Kontaktperson updateKontaktpersonForDemenziellErkrankten(@RequestBody KontaktpersonDTO kontaktperson, @PathVariable String demenziellErkrankterId, @PathVariable String kontaktPersonId, HttpServletResponse response) {
+        return demenziellErkrankterRepository.save(demenziellErkrankterRepository.findById(demenziellErkrankterId).map(demenziellErkrankter -> {
             List<Kontaktperson> kontaktpersonen = demenziellErkrankter.getKontaktpersonen();
-            kontaktpersonen.removeIf(existingKontaktperson -> existingKontaktperson.getId().equals(kontaktPersonId));
+            if(!kontaktpersonen.removeIf(existingKontaktperson -> existingKontaktperson.getId().equals(kontaktPersonId))) {
+                response.setStatus(HttpServletResponse.SC_CREATED);
+            }
+            kontaktperson.setId(kontaktPersonId);
             kontaktpersonen.add(new Kontaktperson(kontaktperson));
             demenziellErkrankter.setKontaktpersonen(kontaktpersonen);
             return demenziellErkrankter;
-        }).orElseThrow(DemenziellErkrankterNotFoundException::new));
-        return new Kontaktperson(kontaktperson);
+        }).orElseThrow(DemenziellErkrankterNotFoundException::new))
+                .getKontaktpersonen().parallelStream().filter(kontektpersonFromRepo -> kontektpersonFromRepo.getId().equals(kontaktperson.getId()))
+                .findFirst().orElseThrow(KontaktpersonNotFoundException::new);
     }
 
     @Operation(
             summary = "Kontaktpersonen für Demenziell Erkrankten löschen",
             responses = {
                     @ApiResponse(
-                            responseCode = "200",
+                            responseCode = "204",
                             description = "Kontaktperson wird gelöscht"
                     ),
                     @ApiResponse(
@@ -396,6 +426,7 @@ public class DemenziellErkrankterController {
             }
     )
     @DeleteMapping("/demenziell-erkrankte/{demenziellErkrankterId}/kontaktpersonen/{kontaktPersonId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteKontaktpersonForDemenziellErkrankten(@PathVariable String demenziellErkrankterId, @PathVariable String kontaktPersonId) {
         demenziellErkrankterRepository.save(demenziellErkrankterRepository.findById(demenziellErkrankterId).map(demenziellErkrankter -> {
             List<Kontaktperson> kontaktpersonen = demenziellErkrankter.getKontaktpersonen();
@@ -501,7 +532,7 @@ public class DemenziellErkrankterController {
             summary = "Positionssender für Demenziell Erkrankten anlegen",
             responses = {
                     @ApiResponse(
-                            responseCode = "200",
+                            responseCode = "201",
                             description = "Positionssender wird angelegt und ausgegeben",
                             content = @Content(
                                     mediaType = "application/json",
@@ -536,14 +567,16 @@ public class DemenziellErkrankterController {
             }
     )
     @PostMapping("/demenziell-erkrankte/{demenziellErkrankterId}/positionssender")
+    @ResponseStatus(HttpStatus.CREATED)
     public Positionssender createPositionssenderForDemenziellErkrankten(@RequestBody PositionssenderDTO positionssender, @PathVariable String demenziellErkrankterId) {
-        demenziellErkrankterRepository.save(demenziellErkrankterRepository.findById(demenziellErkrankterId).map(demenziellErkrankter -> {
+        return demenziellErkrankterRepository.save(demenziellErkrankterRepository.findById(demenziellErkrankterId).map(demenziellErkrankter -> {
             List<Positionssender> positionssenderList = demenziellErkrankter.getPositionssender();
             positionssenderList.add(new Positionssender(positionssender));
             demenziellErkrankter.setPositionssender(positionssenderList);
             return demenziellErkrankter;
-        }).orElseThrow(DemenziellErkrankterNotFoundException::new));
-        return new Positionssender(positionssender);
+        }).orElseThrow(DemenziellErkrankterNotFoundException::new))
+                .getPositionssender().parallelStream().filter(positionssenderFromRepo -> positionssenderFromRepo.getId().equals(positionssender.getId()))
+                .findFirst().orElseThrow(PositionssenderNotFoundException::new);
     }
 
     @Operation(
@@ -551,7 +584,15 @@ public class DemenziellErkrankterController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Positionssender wird aktualisiert/angelegt und ausgegeben",
+                            description = "Positionssender wird aktualisiert und ausgegeben",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = Positionssender.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "201",
+                            description = "Positionssender wird angelegt und ausgegeben",
                             content = @Content(
                                     mediaType = "application/json",
                                     schema = @Schema(implementation = Positionssender.class)
@@ -591,22 +632,26 @@ public class DemenziellErkrankterController {
             }
     )
     @PutMapping("/demenziell-erkrankte/{demenziellErkrankterId}/positionssender/{positionssenderId}")
-    public Positionssender updatePositionssenderForDemenziellErkrankten(@RequestBody PositionssenderDTO positionssender, @PathVariable String demenziellErkrankterId, @PathVariable String positionssenderId) {
-        demenziellErkrankterRepository.save(demenziellErkrankterRepository.findById(demenziellErkrankterId).map(demenziellErkrankter -> {
+    public Positionssender updatePositionssenderForDemenziellErkrankten(@RequestBody PositionssenderDTO positionssender, @PathVariable String demenziellErkrankterId, @PathVariable String positionssenderId, HttpServletResponse response) {
+        return demenziellErkrankterRepository.save(demenziellErkrankterRepository.findById(demenziellErkrankterId).map(demenziellErkrankter -> {
             List<Positionssender> positionssenderList = demenziellErkrankter.getPositionssender();
-            positionssenderList.removeIf(existingPositionssender -> existingPositionssender.getId().equals(positionssenderId));
+            if(!positionssenderList.removeIf(existingPositionssender -> existingPositionssender.getId().equals(positionssenderId))) {
+                response.setStatus(HttpServletResponse.SC_CREATED);
+            }
+            positionssender.setId(positionssenderId);
             positionssenderList.add(new Positionssender(positionssender));
             demenziellErkrankter.setPositionssender(positionssenderList);
             return demenziellErkrankter;
-        }).orElseThrow(DemenziellErkrankterNotFoundException::new));
-        return new Positionssender(positionssender);
+        }).orElseThrow(DemenziellErkrankterNotFoundException::new))
+                .getPositionssender().parallelStream().filter(positionssenderFromRepo -> positionssenderFromRepo.getId().equals(positionssender.getId()))
+                .findFirst().orElseThrow(PositionssenderNotFoundException::new);
     }
 
     @Operation(
             summary = "Positionssender für Demenziell Erkrankten löschen",
             responses = {
                     @ApiResponse(
-                            responseCode = "200",
+                            responseCode = "204",
                             description = "Positionssender wird gelöscht"
                     ),
                     @ApiResponse(
@@ -637,6 +682,7 @@ public class DemenziellErkrankterController {
             }
     )
     @DeleteMapping("/demenziell-erkrankte/{demenziellErkrankterId}/positionssender/{positionssenderId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePositionssenderForDemenziellErkrankten(@PathVariable String demenziellErkrankterId, @PathVariable String positionssenderId) {
         demenziellErkrankterRepository.save(demenziellErkrankterRepository.findById(demenziellErkrankterId).map(demenziellErkrankter -> {
             List<Positionssender> positionssenderList = demenziellErkrankter.getPositionssender();
