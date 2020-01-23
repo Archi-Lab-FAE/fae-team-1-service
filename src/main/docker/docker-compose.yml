@@ -27,7 +27,7 @@ services:
       - fae_backend
 
 volumes:
-  fae-team-1-service-db: {}
+  fae-team-1-service_db: {}
 
 networks:
   service_internal:
