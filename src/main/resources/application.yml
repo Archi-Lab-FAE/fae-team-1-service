@@ -31,7 +31,7 @@ server:
   servlet:
     context-path: /team-1
 # Kafka-topic
-product.topic: product
+product.topic: "demenziellErkrankte"
 
 # swagger-ui
 springdoc:

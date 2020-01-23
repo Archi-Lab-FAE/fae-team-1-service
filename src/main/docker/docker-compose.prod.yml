@@ -1,6 +1,13 @@
 version: "3.7"
 
 services:
+  postgres:
+    deploy:
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 120s
   springboot-service:
     image: docker.nexus.archi-lab.io/archilab/fae-team-1-service-ms:${TAG}
     deploy:
@@ -17,9 +24,3 @@ services:
     environment:
       - TZ=Europe/Berlin
       - SPRING_PROFILES_ACTIVE=prod
-    networks:
-      - fae_backend
-
-networks:
-  fae_backend:
-    external: true

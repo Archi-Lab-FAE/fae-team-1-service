@@ -1,14 +1,32 @@
 version: "3.7"
 
 services:
+  image: postgres:10.1
+    volumes:
+      - fae-team-1-service_db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=Franz
+      - POSTGRES_USER=team1
+      - POSTGRES_DB=team1
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    networks:
+      - service_internal
   springboot-service:
     image: docker.nexus.archi-lab.io/archilab/fae-team-1-service-ms
+    environment:
+      - TZ=Europe/Berlin
+      - TEAM1_DB=postgres
+      - TEAM1_DB_NAME=team1
+      - TEAM1_DB_USER=team1
+      - TEAM1_DB_PW=Franz
+      depends_on:
+        - postgres
     networks:
       - service_internal
       - fae_backend
 
 volumes:
-  shop_demo_db: {}
+  fae-team-1-service-db: {}
 
 networks:
   service_internal:

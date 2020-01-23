@@ -2,8 +2,8 @@ server:
   port: 8081
 spring:
   # Kafka
-  #kafka:
-  #  bootstrap-servers: localhost:9090
+  kafka:
+    bootstrap-servers: localhost:9092
 # Eureka
 eureka:
   client:

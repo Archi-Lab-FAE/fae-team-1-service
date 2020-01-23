@@ -1,7 +1,11 @@
 spring:
+  datasource:
+    url: jdbc:postgresql://${TEAM1_DB}:5432/${TEAM1_DB_NAME}
+    password: ${TEAM1_DB_PW}
+    username: ${TEAM1_DB_USER}
   # kafka servers
-  #kafka:
-  #  bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
+  kafka:
+    bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
 # Eureka
 eureka:
   client:

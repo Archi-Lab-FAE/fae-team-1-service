@@ -1,5 +1,7 @@
 package de.th.koeln.archilab.fae.faeteam1service.demenziell_erkrankter;
 
+import de.th.koeln.archilab.fae.faeteam1service.eventing.EventEntity;
+import de.th.koeln.archilab.fae.faeteam1service.eventing.EventPublishingEntityListener;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -11,8 +13,9 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @Entity
+@EntityListeners(EventPublishingEntityListener.class)
 @Table(name = "demenziellErkrankte")
-public class DemenziellErkrankter implements Serializable {
+public class DemenziellErkrankter implements Serializable, EventEntity {
 
     @Id
     private String id;
