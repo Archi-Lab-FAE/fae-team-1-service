@@ -20,8 +20,8 @@ services:
       - TEAM1_DB_NAME=team1
       - TEAM1_DB_USER=team1
       - TEAM1_DB_PW=Franz
-      depends_on:
-        - postgres
+    depends_on:
+      - postgres
     networks:
       - service_internal
       - fae_backend
