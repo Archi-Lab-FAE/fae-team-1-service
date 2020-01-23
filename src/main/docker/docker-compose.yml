@@ -1,7 +1,8 @@
 version: "3.7"
 
 services:
-  image: postgres:10.1
+  postgres:
+    image: postgres:10.1
     volumes:
       - fae-team-1-service_db:/var/lib/postgresql/data
     environment:

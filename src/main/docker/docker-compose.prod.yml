@@ -24,3 +24,4 @@ services:
     environment:
       - TZ=Europe/Berlin
       - SPRING_PROFILES_ACTIVE=prod
+      -
