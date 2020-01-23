@@ -1,5 +1,7 @@
 package de.th.koeln.archilab.fae.faeteam1service.eventing;
 
-public interface EventEntity {
+import java.io.Serializable;
+
+public interface EventEntity extends Serializable {
     String getId();
 }

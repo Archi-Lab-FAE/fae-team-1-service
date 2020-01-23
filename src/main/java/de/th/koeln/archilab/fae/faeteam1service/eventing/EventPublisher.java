@@ -44,13 +44,13 @@ public class EventPublisher implements ApplicationContextAware {
         try {
             return this.objectMapper.writeValueAsString(event);
         } catch (JsonProcessingException e) {
-            LOGGER.error("Could not parse event {} : {}", event.toString(), e.getMessage());
+            LOGGER.error("Could not parse event {} : {}", event, e.getMessage());
             return "";
         }
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(ApplicationContext applicationContext) {
         EventPublisher.applicationContext = applicationContext;
     }
 }
