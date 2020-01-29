@@ -3,14 +3,16 @@ package de.th.koeln.archilab.fae.faeteam1service.demenziell_erkrankter;
 import de.th.koeln.archilab.fae.faeteam1service.eventing.EventEntity;
 import de.th.koeln.archilab.fae.faeteam1service.eventing.EventPublishingEntityListener;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @Entity
 @EntityListeners(EventPublishingEntityListener.class)
