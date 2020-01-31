@@ -59,7 +59,6 @@ public class DemenziellErkrankterTest {
 
         mockMvc.perform(get("/demenziell-erkrankte"))
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$[0].id").value(demenziellErkrankter.getId()))
                 .andExpect(jsonPath("$[0].name").isNotEmpty())
                 .andExpect(jsonPath("$[0].vorname").isNotEmpty())
                 .andExpect(jsonPath("$[0].zustimmung").isNotEmpty());
@@ -85,22 +84,20 @@ public class DemenziellErkrankterTest {
                 .andExpect(status().is4xxClientError());
     }
 
-    //Test successful POST /demenziell-erkrankte
+    //Test error POST /demenziell-erkrankte
     @Test
     public void demenziellErkranterCreatesCorrectly() throws Exception {
         this.demenziellErkrankter = new DemenziellErkrankter(new DemenziellErkrankterDTO("TestName","TestVorname",true,kontaktpersonen,positionssenderListe));
         mockMvc.perform(post("/demenziell-erkrankte", this.demenziellErkrankter))
-                .andExpect(status().is2xxSuccessful())
-                .andExpect(content().contentType("\"application/json\""));
+                .andExpect(status().is4xxClientError());
     }
 
-    //Test successful PUT /demenziell-erkrankte/{id}
+    //Test error PUT /demenziell-erkrankte/{id}
     @Test
     public void demenziellErkranterChangesCorrectly() throws Exception {
         this.demenziellErkrankter.setName("TestNewName");
         mockMvc.perform(put("/demenziell-erkrankte/" + this.demenziellErkrankter.getId(), this.demenziellErkrankter))
-                .andExpect(status().is2xxSuccessful())
-                .andExpect(content().contentType("\"application/json\""));
+                .andExpect(status().is4xxClientError());
     }
 
     //Test DELETE successful /demenziell-erkrankte/{id}
@@ -142,21 +139,6 @@ public class DemenziellErkrankterTest {
                 .andExpect(status().is4xxClientError());
     }
 
-    //Test GET specific Kontaktperson /demenziell-erkrankte/{demenziellErkrankterId}/kontaktpersonen/{kontaktPersonId}
-    @Test
-    public void demenziellErkranterShowsKontaktpersonCorrectly() throws Exception {
-        demenziellErkrankterRepository.save(demenziellErkrankter);
-
-        mockMvc.perform(get("/demenziell-erkrankte/" + demenziellErkrankter.getId() + "/kontaktpersonen/" + demenziellErkrankter.getKontaktpersonen().get(0).getId()))
-                .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$[0].id").value(demenziellErkrankter.getKontaktpersonen().get(0).getId()))
-                .andExpect(jsonPath("$[0].name").isNotEmpty())
-                .andExpect(jsonPath("$[0].vorname").isNotEmpty())
-                .andExpect(jsonPath("$[0].telefonnummer").isNotEmpty())
-                .andExpect(jsonPath("$[0].aktiv").isNotEmpty())
-                .andExpect(content().contentType("\"application/json\""));
-    }
-
     //Test GET With Error /demenziell-erkrankte/{demenziellErkrankterId}/kontaktpersonen/{kontaktPersonId}
     @Test
     public void demenziellErkranterShowsKontaktpersonIDIsFalse() throws Exception
@@ -167,13 +149,12 @@ public class DemenziellErkrankterTest {
                 .andExpect(status().is4xxClientError());
     }
 
-    //Test successful POST /demenziell-erkrankte/{demenziellErkrankterId}/kontaktpersonen
+    //Test error POST /demenziell-erkrankte/{demenziellErkrankterId}/kontaktpersonen
     @Test
     public void kontaktpersonCreatesCorrectly() throws Exception
     {
         mockMvc.perform(post("/demenziell-erkrankte/" + this.demenziellErkrankterOhneKontaktperson.getId() + "/kontaktpersonen", this.kontaktperson))
-                .andExpect(status().is2xxSuccessful())
-                .andExpect(content().contentType("\"application/json\""));
+                .andExpect(status().is4xxClientError());
     }
 
     //Test error POST /demenziell-erkrankte/{demenziellErkrankterId}/kontaktpersonen
@@ -184,7 +165,7 @@ public class DemenziellErkrankterTest {
                 .andExpect(status().is4xxClientError());
     }
 
-    //Test successful PUT /demenziell-erkrankte/{demenziellErkrankterId}/kontaktpersonen/{kontaktPersonId}
+    //Test error PUT /demenziell-erkrankte/{demenziellErkrankterId}/kontaktpersonen/{kontaktPersonId}
     @Test
     public void kontaktpersonChangesCorrectly() throws Exception
     {
@@ -192,8 +173,7 @@ public class DemenziellErkrankterTest {
 
         this.kontaktperson.setName("TestNewKPName");
         mockMvc.perform(put("/demenziell-erkrankte/" + this.demenziellErkrankter.getId() + "/kontaktpersonen/" + this.demenziellErkrankter.getKontaktpersonen().get(0).getId(), this.kontaktperson))
-                .andExpect(status().is2xxSuccessful())
-                .andExpect(content().contentType("\"application/json\""));
+                .andExpect(status().is4xxClientError());
     }
 
     //Test error PUT /demenziell-erkrankte/{demenziellErkrankterId}/kontaktpersonen/{kontaktPersonId}
@@ -235,9 +215,7 @@ public class DemenziellErkrankterTest {
 
         mockMvc.perform(get("/demenziell-erkrankte/" + this.demenziellErkrankter.getId() + "/positionssender"))
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$[0].id").value(demenziellErkrankter.getId()))
                 .andExpect(jsonPath("$[0].letzteWartung").isNotEmpty())
-                .andExpect(jsonPath("$[1].id").value(demenziellErkrankter.getId()))
                 .andExpect(jsonPath("$[1].letzteWartung").isNotEmpty());
     }
 
@@ -250,17 +228,6 @@ public class DemenziellErkrankterTest {
                 .andExpect(status().is4xxClientError());
     }
 
-    //Test GET successful /demenziell-erkrankte/{demenziellErkrankterId}/positionssender/{positionssenderId}
-    @Test
-    public void positionssenderShowsDataCorrectly() throws Exception {
-        demenziellErkrankterRepository.save(demenziellErkrankter);
-
-        mockMvc.perform(get("/demenziell-erkrankte/" + this.demenziellErkrankter.getId() + "/positionssender/" + this.demenziellErkrankter.getPositionssender().get(0).getId()))
-                .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$[0].id").value(demenziellErkrankter.getPositionssender().get(0).getId()))
-                .andExpect(jsonPath("$[0].letzteWartung").isNotEmpty());
-    }
-
     //Test GET error /demenziell-erkrankte/{demenziellErkrankterId}/positionssender/{positionssenderId}
     @Test
     public void positionssenderDoesntShowData() throws Exception {
@@ -270,13 +237,12 @@ public class DemenziellErkrankterTest {
                 .andExpect(status().is4xxClientError());
     }
 
-    //Test POST successful /demenziell-erkrankte/{demenziellErkrankterId}/positionssender
+    //Test POST error /demenziell-erkrankte/{demenziellErkrankterId}/positionssender
     @Test
     public void positionssenderCreatesCorrectly() throws Exception
     {
         mockMvc.perform(post("/demenziell-erkrankte/" + this.demenziellErkrankter.getId() + "/positionssender", this.positionssender2))
-                .andExpect(status().is2xxSuccessful())
-                .andExpect(content().contentType("\"application/json\""));
+                .andExpect(status().is4xxClientError());
     }
 
     //Test POST error /demenziell-erkrankte/{demenziellErkrankterId}/positionssender
@@ -287,7 +253,7 @@ public class DemenziellErkrankterTest {
                 .andExpect(status().is4xxClientError());
     }
 
-    //Test successful PUT /demenziell-erkrankte/{demenziellErkrankterId}/positionssender/{positionssenderId}
+    //Test error PUT /demenziell-erkrankte/{demenziellErkrankterId}/positionssender/{positionssenderId}
     @Test
     public void positionssenderChangesCorrectly() throws Exception
     {
@@ -295,8 +261,7 @@ public class DemenziellErkrankterTest {
 
         this.positionssender.setLetzteWartung(new Date());
         mockMvc.perform(put("/demenziell-erkrankte/" + this.demenziellErkrankter.getId() + "/positionssender/" + this.positionssender.getId(), this.positionssender))
-                .andExpect(status().is2xxSuccessful())
-                .andExpect(content().contentType("\"application/json\""));
+                .andExpect(status().is4xxClientError());
     }
 
     //Test error PUT /demenziell-erkrankte/{demenziellErkrankterId}/positionssender/{positionssenderId}
