@@ -22,4 +22,14 @@ public class DemenziellErkrankterDTO implements Serializable {
     public DemenziellErkrankterDTO() {
         this.id = UUID.randomUUID().toString();
     }
+
+    public DemenziellErkrankterDTO(String name, String vorname, Boolean zustimmung, List<Kontaktperson> kontaktpersonen, List<Positionssender> positionssender)
+    {
+        this.id = UUID.randomUUID().toString();
+        this.name = name;
+        this.vorname = vorname;
+        this.zustimmung = zustimmung;
+        this.kontaktpersonen = kontaktpersonen;
+        this.positionssender = positionssender;
+    }
 }
