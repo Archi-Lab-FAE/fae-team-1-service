@@ -20,13 +20,4 @@ public class KontaktpersonDTO implements Serializable {
     public KontaktpersonDTO() {
         this.id = UUID.randomUUID().toString();
     }
-
-    public KontaktpersonDTO(String name, String vorname, String telefonnummer, Boolean aktiv)
-    {
-        this.id = UUID.randomUUID().toString();
-        this.name = name;
-        this.vorname = vorname;
-        this.telefonnummer = telefonnummer;
-        this.aktiv = aktiv;
-    }
 }
