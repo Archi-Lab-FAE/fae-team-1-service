@@ -13,16 +13,9 @@ import java.util.UUID;
 @AllArgsConstructor
 public class PositionssenderDTO implements Serializable {
     private String id;
-
     private Date letzteWartung;
 
     public PositionssenderDTO() {
         this.id = UUID.randomUUID().toString();
-    }
-
-    public PositionssenderDTO(Date letzteWartung)
-    {
-        this.id = UUID.randomUUID().toString();
-        this.letzteWartung = letzteWartung;
     }
 }
